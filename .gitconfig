@@ -1,0 +1,10 @@
+[credential]
+	helper = cache --timeout=604800
+[user]
+	email = james.haydon@gmail.com
+	name = James Henri Haydon
+[core]
+	editor = emacs
+[rerere]
+	enabled = true
+	autoupdate = true
