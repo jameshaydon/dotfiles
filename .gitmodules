@@ -1,0 +1,4 @@
+[submodule ".emacs.d/structured-haskell-mode"]
+	path = .emacs.d/structured-haskell-mode
+	url = https://github.com/projectional-haskell/structured-haskell-mode.git
+	branch = master
