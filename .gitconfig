@@ -4,7 +4,7 @@
 	email = james.haydon@gmail.com
 	name = James Henri Haydon
 [core]
-	editor = emacs
+	editor = emacsclient -a=\\\"\\\"
 [rerere]
 	enabled = true
 	autoupdate = true

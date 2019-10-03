@@ -80,8 +80,8 @@ if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='nano'
 else
     export ALTERNATE_EDITOR=""
-    export EDITOR="emacsclient -t"
-    export VISUAL="emacsclient -c -a emacs"
+    export EDITOR="emacsclient"
+    export VISUAL=$EDITOR
 fi
 
 # Compilation flags

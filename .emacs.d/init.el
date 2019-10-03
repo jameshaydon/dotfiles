@@ -31,7 +31,7 @@
 ;; Start an emacs daemon/server ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (server-start)
+(server-start)
 
 ;;;;;;;;;;
 ;; Font ;;
@@ -129,7 +129,7 @@
 (setq-default fill-column 80)
 
 ;; Sessions
-;; (desktop-save-mode 1)
+(desktop-save-mode 1)
 
 ;; Make ediff diff at the character level
 (setq-default ediff-forward-word-function 'forward-char)
