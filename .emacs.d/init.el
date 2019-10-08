@@ -31,7 +31,7 @@
 ;; Start an emacs daemon/server ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(server-start)
+;;(server-start)
 
 ;;;;;;;;;;
 ;; Font ;;
@@ -44,7 +44,7 @@
 ;; https://github.com/johnw42/fira-code-emacs
 ;; (add-to-list 'load-path "~/dev/fira-code-emacs/")
 ;; (load-file "~/dev/fira-code-emacs/fira-code.el")
-(set-face-attribute 'default nil :family "IBM Plex Mono" :height 135)
+(set-face-attribute 'default nil :family "IBM Plex Mono" :height 125)
 ;;(add-hook 'prog-mode-hook 'fira-code-mode)
 
 ;; line-height
@@ -171,8 +171,7 @@
   :ensure t
   :config
   (load-theme 'doom-Iosvkem t)
-  ;; (load-theme 'doom-one-light t)
-  )
+  (set-face-background 'default "black"))
 
 ;; (use-package zenburn-theme
 ;;   :ensure t
@@ -255,20 +254,35 @@
 ;;   :bind (("C-x C-f" . helm-find-files)
 ;; 	 ("M-x" . helm-M-x)))
 
+;;;;;;;;;;;;;;;
+;; prescient ;;
+;;;;;;;;;;;;;;;
+
+(use-package prescient
+  :ensure t
+  :config (prescient-persist-mode t))
+
+(use-package ivy-prescient
+  :ensure t
+  :after (ivy prescient)
+  :config (ivy-prescient-mode t))
+
+(use-package company-prescient
+  :after (company prescient)
+  :ensure t
+  :config (company-prescient-mode t))
+
 ;;;;;;;;;
 ;; Ivy ;;
 ;;;;;;;;;
-
-;; Fuzzy searching/matching
-(use-package flx
-  :ensure t)
 
 (use-package amx
   :ensure t
   :config (amx-mode)
   )
 
-(use-package ivy :demand
+(use-package ivy
+  :demand t
   :ensure t
   :config
   (setq ivy-use-virtual-buffers t
@@ -290,10 +304,26 @@
 
 (use-package counsel
   :ensure t
+  :after ivy
+  :demand t
   :config
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)))
+
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :ensure t
+  :config
+  (setq counsel-projectile-sort-files t)
+  (counsel-projectile-mode t))
+
+(use-package ivy-posframe
+  :ensure t
+  :after ivy
+  :custom
+  (ivy-display-function #'ivy-posframe-display-at-frame-center)
+  :config (ivy-posframe-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Line-based searching ;;
@@ -363,7 +393,6 @@
 ;;;;;;;;;;;;;;;;;
 ;; Completions ;;
 ;;;;;;;;;;;;;;;;;
-
 
 (use-package company
   :ensure t
@@ -584,28 +613,28 @@
 
 (add-hook 'prog-mode-hook 'subword-mode)
 
-(use-package lsp-mode
-  :ensure t
-  :hook (haskell-mode . lsp)
-  :commands lsp)
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :hook (haskell-mode . lsp)
+;;   :commands lsp)
 
-(use-package company-lsp
-  :ensure t
-  :commands company-lsp)
+;; (use-package company-lsp
+;;   :ensure t
+;;   :commands company-lsp)
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode)
 
 ;;;;;;;;;;;
 ;; Idris ;;
 ;;;;;;;;;;;
 
-(use-package idris-mode
-  :ensure t)
+;; (use-package idris-mode
+;;   :ensure t)
 
-(use-package helm-idris
-  :ensure t)
+;; (use-package helm-idris
+;;   :ensure t)
 
 ;;;;;;;;;;;;;
 ;; Haskell ;;
@@ -613,15 +642,16 @@
 
 ;; Learn more SHM keybindings here:
 ;; https://github.com/projectional-haskell/structured-haskell-mode/blob/master/elisp/shm.el
-(add-to-list 'load-path "~/.emacs.d/structured-haskell-mode/elisp")
-(require 'shm)
-(add-hook 'haskell-mode-hook 'structured-haskell-mode)
+;; (add-to-list 'load-path "~/.emacs.d/structured-haskell-mode/elisp")
+;; (require 'shm)
+;; (add-hook 'haskell-mode-hook 'structured-haskell-mode)
+;; (add-hook 'structured-haskell-mode-hook
+;;           (lambda ()
+;;             (haskell-indent-mode nil)
+;;             (set-face-background 'shm-current-face "gray20")))
+
 (add-hook 'haskell-mode-hook
           (lambda () (setq haskell-indent-spaces 2)))
-(add-hook 'structured-haskell-mode-hook
-          (lambda ()
-            (haskell-indent-mode nil)
-            (local-set-key (kbd "C-c c s") 'shm/case-split)))
 
 (use-package lsp-haskell
   :ensure t
@@ -812,7 +842,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(atomic-chrome lua-mode nov clojure-mode elm-mode dante lsp-haskell helm-idris idris-mode lsp-ui lsp-mode markdown-mode yaml-mode git-gutter-fringe magit-todos magit yasnippet-snippets yasnippet expand-region aggressive-indent smartparens ace-window avy smart-jump projectile company-quickhelp company multiple-cursors counsel swiper ivy flycheck-pos-tip flycheck multi-term which-key doom-modeline popwin doom-themes auto-package-update better-defaults use-package dash-functional))
- '(safe-local-variable-values '((dante-repl-command-line "stack" "repl"))))
+ '(safe-local-variable-values
+   '((dante-methods stack)
+     (dante-repl-command-line "stack" "repl"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

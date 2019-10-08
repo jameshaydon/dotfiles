@@ -4,6 +4,9 @@
 (setq mc/cmds-to-run-for-all
       '(
         markdown-outdent-or-delete
+        shm/backward-kill-word
+        shm/del
+        shm/space
         sp-backward-delete-char
         sp-backward-kill-word
         sp-delete-char
